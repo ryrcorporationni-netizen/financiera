@@ -32,6 +32,30 @@
     </div>
 
     <script>
+    // Seleccionamos el formulario para prevenir el envío por defecto
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Evita que la página se recargue
+        
+        const email = document.getElementById('email').value.toUpperCase(); // Convertimos a mayúsculas
+        const primerCaracter = email.charAt(0);
+        
+        // Lógica de redirección basada en el rol
+        switch(primerCaracter) {
+            case 'A':
+                window.location.href = "../administracion_html/admin.html";
+                break;
+            case 'R':
+                window.location.href = "../cobrador_html/cobrador.html";
+                break;
+            case 'C':
+                window.location.href = "../cliente_html/estado_cuenta.html";
+                break;
+            default:
+                alert("Correo no válido o rol no reconocido.");
+        }
+    });
+    
+    <script>
         function recuperarPassword() {
             const email = document.getElementById('email').value;
             if (email === "") {
@@ -42,4 +66,5 @@
         }
     </script>
 </body>
+
 </html>
