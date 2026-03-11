@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Solicitudes Pendientes</title>
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Financiera App</h2>
+        <ul>
+            <li><a href="admin.html">Dashboard</a></li>
+            <li><a href="clientes.html">Clientes</a></li>
+            <li style="color: #f1c40f; font-weight: bold;">Solicitudes</li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <header style="display: flex; justify-content: space-between; align-items: center; padding: 20px;">
+            <h1>Solicitudes de Crédito</h1>
+            
+            <a href="admin.html" style="background-color: #64748b; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 0.9rem; font-weight: 600;">
+                ← Regresar al Dashboard
+            </a>
+        </header>
+
+        <section class="table-container">
+            <table>
+                <tr>
+                    <th>Cliente</th>
+                    <th>Monto</th>
+                    <th>Trabajador</th>
+                    <th>Acción</th>
+                </tr>
+                <tr>
+                    <td>Carlos Rivas</td>
+                    <td>C$ 5,000</td>
+                    <td>Ana G.</td>
+                    <td>
+                        <button onclick="verDetalles('Carlos Rivas', '123-456789-0000X', 'Tienda El Sol', 'C$ 8,500')">👁️ Detalles</button>
+                        <button class="btn-approve" onclick="aprobar('Carlos Rivas')">✅</button>
+                        <button class="btn-reject" onclick="rechazar('Carlos Rivas')">❌</button>
+                    </td>
+                </tr>
+            </table>
+        </section>
+    </div>
+
+    <div id="modalDetalles" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); justify-content:center; align-items:center; z-index:1000;">
+        <div style="background:white; padding:25px; border-radius:12px; width:350px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
+            <h3>Ficha de Datos del Cliente</h3>
+        <p><strong>Nombre:</strong> <span id="mNombre"></span></p>
+        <p><strong>Cédula:</strong> <span id="mCedula"></span></p>
+        <p><strong>Lugar de trabajo:</strong> <span id="mTrabajo"></span></p>
+        <p style="color: #059669;"><strong>Ingreso mensual aprox:</strong> <span id="mIngreso"></span></p>
+            <button onclick="document.getElementById('modalDetalles').style.display='none'" style="width:100%; padding:10px; background:#64748b; color:white; border:none; border-radius:6px; cursor:pointer;">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+       function verDetalles(nombre, cedula, trabajo, ingreso) {
+            document.getElementById('mNombre').innerText = nombre;
+            document.getElementById('mCedula').innerText = cedula;
+            document.getElementById('mTrabajo').innerText = trabajo;
+            document.getElementById('mIngreso').innerText = ingreso; // Nuevo
+            
+            document.getElementById('modalDetalles').style.display = 'flex';
+        }
+
+        function aprobar(nombre) {
+            if(confirm("¿Aprobar solicitud de " + nombre + "?")) {
+                alert("Solicitud aprobada y cliente registrado.");
+                location.reload();
+            }
+        }
+        function rechazar(nombre) {
+            if(confirm("¿Rechazar solicitud de " + nombre + "?")) {
+                alert("Solicitud rechazada.");
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>

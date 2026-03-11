@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="stylesheet" href="../css/admin.css">
+    <title>Gestión de Trabajadores</title>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Financiera App</h2>
+        <ul>
+            <li><a href="admin.html">Dashboard</a></li>
+            <li><a href="clientes.html">Clientes</a></li>
+            <li><a href="rutas.html">Rutas</a></li>
+            <li><a href="reportes.html">Reportes</a></li>
+            <li style="color: #3498db; font-weight: bold;">Trabajadores</li>
+        </ul>
+    </div>
+
+    <div class="logout-container">
+        <button class="btn-logout" onclick="cerrarSesion()">Cerrar Sesión</button>
+    </div>
+
+    <div class="main-content">
+        <h1>Gestión de Personal</h1>
+        
+        <div class="toolbar">
+            <button class="btn-primary" onclick="abrirModalTrabajador()">+ Nuevo Empleado</button>
+        </div>
+
+        <section class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Sueldo Base</th>
+                        <th>Comisión (%)</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Pedro R.</td>
+                        <td>$300</td>
+                        <td>5%</td>
+                        <td>Activo</td>
+                        <td>
+                            <button class="btn-sm" onclick="editarTrabajador('Pedro R.', 300, 5)">Editar</button>
+                            <button class="btn-sm" style="background: #27ae60;">Pagar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <div id="modalTrabajador" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="cerrarModal()">&times;</span>
+            <h2 id="modalTitulo">Nuevo Empleado</h2>
+            <form id="formEmpleado">
+                <input type="hidden" id="empleadoId">
+                <input type="text" id="nombre" placeholder="Nombre completo" required style="width:100%; margin-bottom:10px;">
+                <input type="number" id="sueldo" placeholder="Sueldo Base" required style="width:100%; margin-bottom:10px;">
+                <input type="number" id="comision" placeholder="Comisión %" required style="width:100%; margin-bottom:10px;">
+                <button type="submit" class="btn-primary">Guardar Datos</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Abrir para NUEVO
+        function abrirModalTrabajador() {
+            document.getElementById('modalTitulo').innerText = "Registrar Nuevo Empleado";
+            document.getElementById('formEmpleado').reset();
+            document.getElementById('modalTrabajador').style.display = 'block';
+        }
+
+        // Abrir para EDITAR
+        function editarTrabajador(nombre, sueldo, comision) {
+            document.getElementById('modalTitulo').innerText = "Editar Empleado";
+            document.getElementById('nombre').value = nombre;
+            document.getElementById('sueldo').value = sueldo;
+            document.getElementById('comision').value = comision;
+            document.getElementById('modalTrabajador').style.display = 'block';
+        }
+
+        // CERRAR (Funciona para ambos casos)
+        function cerrarModal() {
+            document.getElementById('modalTrabajador').style.display = 'none';
+        }
+    </script>
+    <script>
+        function cerrarSesion() {
+            // Aquí, cuando conectes Firebase, añadirás: firebase.auth().signOut()
+            // Por ahora, solo redireccionamos:
+            window.location.href = "../index.html";
+        }
+    </script>
+</body>
+</html>

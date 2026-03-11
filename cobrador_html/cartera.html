@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/cobrador.css">
+    <title>Cartera Total</title>
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="header-main" style="display: flex; justify-content: space-between; align-items: center; padding: 0 16px;">
+            <div>
+                <h1>Cartera</h1>
+                <p>Clientes registrados</p>
+            </div>
+            <nav class="navbar">
+                <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="cobrador.html">🏠 Ruta Hoy</a></li>
+                    <li><a href="cartera.html" style="color: #38bdf8;">📂 Cartera</a></li>
+                    <li><a href="solicitud.html">📍 Solicitudes</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+        <div class="search-container">
+            <input type="text" id="busqueda" placeholder="Buscar en cartera..." onkeyup="filtrarCartera()">
+        </div>
+    </header>
+
+    <main class="lista-container">
+        <div id="listaCompleta">
+            <div class="client-card" style="border-left: 5px solid #ef4444;">
+                <div class="card-info">
+                    <h3>María López</h3>
+                    <p>Mora total: <strong>C$ 1,200</strong></p>
+                </div>
+                <button class="btn-action" onclick="abrirModal('María López', 'Diaria', '1,200', '5,000')">Detalles</button>
+            </div>
+        </div>
+    </main>
+
+    <div id="modalDetalle" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="cerrarModalPorId('modalDetalle')">&times;</span>
+            <h2 id="nombreCliente">Nombre Cliente</h2>
+            <div id="infoFinanciera">
+                <p>Tipo de cuota: <strong id="tipoCuota">Diaria</strong></p>
+                <p>Mora: <strong id="moraCliente">C$ 0</strong></p>
+                <p>Saldo pendiente: <strong id="saldoPendiente">C$ 0</strong></p>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-action" onclick="realizarPago()">Registrar Pago</button>
+                <button class="btn-action" style="background: #e11d48;" onclick="liquidarDeuda()">Cancelar Saldo Total</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalMonto" class="modal">
+        <div class="modal-content">
+            <h2>Ingresar Monto</h2>
+            <input type="number" id="inputMonto" placeholder="Ej: 500" style="width: 100%; padding: 10px; margin: 15px 0; border-radius: 8px; border: 1px solid #ccc;">
+            <div class="modal-actions">
+                <button class="btn-action" onclick="confirmarPago()">Confirmar Pago</button>
+                <button class="btn-action" style="background: #64748b;" onclick="cerrarModalPorId('modalMonto')">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalConfirmacion" class="modal">
+        <div class="modal-content">
+            <h2>⚠️ Liquidación Total</h2>
+            <div id="resumenLiquidacion" style="text-align: left; margin: 15px 0; padding: 10px; background: #f8fafc; border-radius: 8px;">
+                <p><strong>Cliente:</strong> <span id="confNombre"></span></p>
+                <p><strong>Fecha:</strong> <span id="confFecha"></span></p>
+                <hr>
+                <p><strong>Saldo Pendiente:</strong> C$ <span id="confSaldo"></span></p>
+                <p><strong>Mora actual:</strong> C$ <span id="confMora"></span></p>
+                <p style="font-size: 1.2rem; color: #e11d48;"><strong>Total a liquidar: C$ <span id="confTotal"></span></strong></p>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-action" style="background: #059669;" onclick="ejecutarLiquidacion()">Confirmar Liquidación</button>
+               <button class="btn-action" style="background: #64748b;" onclick="cerrarModalPorId('modalConfirmacion')">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+       // --- LÓGICA MAESTRA PARA MODALES ---
+
+        // Función para abrir cualquier modal por su ID
+        function abrirModalPorId(id) {
+            document.getElementById(id).classList.add('activo');
+        }
+
+        // Función para cerrar cualquier modal por su ID
+        function cerrarModalPorId(id) {
+            document.getElementById(id).classList.remove('activo');
+        }
+
+        // --- FLUJO DE NEGOCIO ---
+
+        // Abre el modal detalle y carga los datos
+        function abrirModal(nombre, tipo, mora, saldo) {
+            document.getElementById('nombreCliente').innerText = nombre;
+            document.getElementById('tipoCuota').innerText = tipo;
+            document.getElementById('moraCliente').innerText = 'C$ ' + mora;
+            document.getElementById('saldoPendiente').innerText = 'C$ ' + saldo;
+            
+            abrirModalPorId('modalDetalle');
+        }
+
+        // Transición a modal de registro de pago
+        function realizarPago() {
+            cerrarModalPorId('modalDetalle');
+            abrirModalPorId('modalMonto');
+        }
+
+        // Lógica de confirmación de pago
+        function confirmarPago() {
+            const monto = document.getElementById('inputMonto').value;
+            if (monto > 0) {
+                alert("¡Éxito! Pago de C$ " + monto + " registrado correctamente.");
+                cerrarModalPorId('modalMonto');
+                document.getElementById('inputMonto').value = "";
+            } else {
+                alert("Por favor, ingresa un monto válido.");
+            }
+        }
+
+        // Transición a modal de liquidación (con cálculos automáticos)
+        function liquidarDeuda() {
+            cerrarModalPorId('modalDetalle');
+            
+            // Obtener valores actuales (limpiando formato de moneda)
+            const nombre = document.getElementById('nombreCliente').innerText;
+            const mora = parseFloat(document.getElementById('moraCliente').innerText.replace('C$ ', '').replace(',', ''));
+            const saldo = parseFloat(document.getElementById('saldoPendiente').innerText.replace('C$ ', '').replace(',', ''));
+            
+            // Inyectar datos en modal confirmación
+            document.getElementById('confNombre').innerText = nombre;
+            document.getElementById('confFecha').innerText = new Date().toLocaleDateString();
+            document.getElementById('confMora').innerText = mora.toLocaleString();
+            document.getElementById('confSaldo').innerText = saldo.toLocaleString();
+            document.getElementById('confTotal').innerText = (mora + saldo).toLocaleString();
+
+            abrirModalPorId('modalConfirmacion');
+        }
+
+        // Finalizar liquidación
+        function ejecutarLiquidacion() {
+            const nombre = document.getElementById('confNombre').innerText;
+            alert("Procesando liquidación total para: " + nombre + "...");
+            cerrarModalPorId('modalConfirmacion');
+        }
+
+        // Funciones utilitarias (Menú y Búsqueda)
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        function filtrarCartera() {
+            let input = document.getElementById('busqueda').value.toLowerCase();
+            let tarjetas = document.getElementsByClassName('client-card');
+            for (let i = 0; i < tarjetas.length; i++) {
+                let nombre = tarjetas[i].querySelector('h3').innerText.toLowerCase();
+                tarjetas[i].style.display = nombre.includes(input) ? "" : "none";
+            }
+        }
+    </script>
+</body>
+</html>

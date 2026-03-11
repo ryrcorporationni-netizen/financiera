@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Acceso Financiera</title>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="logo-area">
+                <h2>Financiera App</h2>
+                <p>Ingresa para gestionar tu cartera</p>
+            </div>
+            
+            <form id="loginForm">
+                <div class="user-box">
+                    <input type="email" id="email" required placeholder="Correo electrónico">
+                </div>
+                <div class="user-box">
+                    <input type="password" id="password" required placeholder="Contraseña">
+                </div>
+                
+                <div class="form-footer">
+                    <a href="#" onclick="recuperarPassword()" class="forgot-pass">¿Olvidaste tu contraseña?</a>
+                </div>
+
+                <button type="submit" class="btn-login">Iniciar Sesión</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function recuperarPassword() {
+            const email = document.getElementById('email').value;
+            if (email === "") {
+                alert("Por favor, ingresa tu correo electrónico primero para recuperar la contraseña.");
+            } else {
+                alert("Se ha enviado un enlace de recuperación a: " + email);
+            }
+        }
+    </script>
+</body>
+</html>

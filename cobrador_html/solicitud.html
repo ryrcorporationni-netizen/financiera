@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/cobrador.css">
+    <title>Nueva Solicitud - Nicaragua</title>
+</head>
+<body>
+
+   <header class="app-header">
+        <div class="header-main" style="display: flex; justify-content: space-between; align-items: center; padding: 0 16px;">
+            <div>
+            <h1>Nueva Solicitud</h1>
+            <p>Ingresa los datos del prospecto</p>
+        </div>      
+
+            <nav class="navbar">
+                <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="cobrador.html">🏠 Ruta Hoy</a></li>
+                    <li><a href="cartera.html">📂 Cartera</a></li>
+                    <li><a href="solicitud.html" style="color: #38bdf8;">📍 Solicitudes</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="lista-container">
+        <div class="client-card">
+            <form id="formSolicitud">
+                <div style="margin-bottom: 15px;">
+                    <label style="font-size: 0.8rem; font-weight: 700; color: #64748b;">NOMBRE COMPLETO</label>
+                    <input type="text" id="nombre" placeholder="Ej: Luis Ramos" 
+                           style="width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; margin-top: 5px; box-sizing: border-box;">
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="font-size: 0.8rem; font-weight: 700; color: #64748b;">UBICACIÓN (REFERENCIA)</label>
+                    <textarea id="direccionReferencia" placeholder="Ej: Rep. Salomón de la Selva, 1ra calle, casa #27..." rows="3"
+                            style="width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; margin-top: 5px; box-sizing: border-box;"></textarea>
+                    
+                    <label style="font-size: 0.8rem; font-weight: 700; color: #64748b; margin-top: 15px; display: block;">COORDENADAS GPS</label>
+                    <input type="text" id="coordenadas" placeholder="Presiona el botón para capturar..." readonly
+                        style="width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; margin-top: 5px; background: #f8fafc; box-sizing: border-box;">
+                    
+                    <button type="button" onclick="obtenerUbicacion()" 
+                            style="background: #0ea5e9; color: white; border: none; padding: 8px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; margin-top: 8px; cursor: pointer;">
+                        📍 Capturar ubicación GPS actual
+                    </button>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+                    <div>
+                        <label style="font-size: 0.8rem; font-weight: 700; color: #64748b;">CÉDULA</label>
+                        <input type="text" id="cedula" placeholder="001-000000-0000X" 
+                               style="width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; margin-top: 5px; box-sizing: border-box;">
+                    </div>
+                    <div>
+                        <label style="font-size: 0.8rem; font-weight: 700; color: #64748b;">TELÉFONO</label>
+                        <input type="tel" id="telefono" placeholder="8888-8888" 
+                               style="width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; margin-top: 5px; box-sizing: border-box;">
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="font-size: 0.8rem; font-weight: 700; color: #64748b;">MONTO SOLICITADO (C$)</label>
+                    <input type="number" id="monto" placeholder="Ej: 3000" 
+                           style="width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; margin-top: 5px; box-sizing: border-box; font-weight: bold; color: #059669;">
+                </div>
+
+                <button type="button" onclick="enviarSolicitud()" class="btn-new-loan" style="margin-top: 10px;">
+                    Enviar a Revisión
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        function enviarSolicitud() {
+            const nombre = document.getElementById('nombre').value;
+            if(nombre === "") {
+                alert("Por favor ingrese al menos el nombre.");
+                return;
+            }
+            alert("Solicitud de " + nombre + " enviada correctamente. El administrador la revisará pronto.");
+            window.location.href = "cobrador.html";
+        }
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        function obtenerUbicacion() {
+            const coordInput = document.getElementById('coordenadas');
+            
+            if (navigator.geolocation) {
+                coordInput.value = "Calculando posición...";
+                
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        // Solo llenamos el campo de coordenadas, dejamos la referencia libre
+                        coordInput.value = `${lat.toFixed(6)}, ${lon.toFixed(6)}`;
+                    },
+                    (error) => {
+                        alert("No se pudo obtener la ubicación. Verifica los permisos.");
+                        coordInput.value = "";
+                    },
+                    { enableHighAccuracy: true }
+                );
+            } else {
+                alert("Tu navegador no soporta geolocalización.");
+            }
+        }
+    </script>
+</body>
+</html>

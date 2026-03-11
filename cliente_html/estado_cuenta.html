@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estado de Cuenta</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/cobrador.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #f1f5f9; margin: 0; padding-bottom: 20px; }
+        .app-header { background: #1e293b; color: white; padding: 20px; text-align: center; }
+        .lista-container { padding: 16px; max-width: 500px; margin: 0 auto; }
+        .client-card { background: white; border-radius: 16px; padding: 20px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .monto-grande { font-size: 2.5rem; font-weight: 800; color: #0f172a; text-align: center; margin: 10px 0; }
+        .btn-cerrar { background: #ef4444; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <header class="app-header">
+        <h2 id="nombreCliente" style="margin: 10px 0;">Cargando...</h2>
+    </header>
+
+    <main class="lista-container">
+        <div class="client-card">
+            <h3 style="margin-top: 0; color: #1e293b; font-size: 1rem;">Saldo Pendiente</h3>
+            <div class="monto-grande">C$ 3,500</div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
+                <div style="background: #f8fafc; padding: 10px; border-radius: 8px; border-left: 4px solid #38bdf8;">
+                    <small style="color: #64748b; display: block;">Prestado</small>
+                    <span style="font-weight: 700;">C$ 10,000</span>
+                </div>
+                <div style="background: #f8fafc; padding: 10px; border-radius: 8px; border-left: 4px solid #f472b6;">
+                    <small style="color: #64748b; display: block;">Interés</small>
+                    <span style="font-weight: 700;">C$ 1,500</span>
+                </div>
+            </div>
+
+            <label style="font-size: 0.8rem; font-weight: 700; color: #64748b;">PROGRESO DEL CRÉDITO</label>
+            <div style="background: #e2e8f0; height: 12px; border-radius: 6px; margin: 8px 0; overflow: hidden;">
+                <div style="background: #22c55e; height: 100%; width: 65%; border-radius: 6px;"></div>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #475569;">
+                <span>0%</span>
+                <span style="font-weight: bold;">65% Pagado</span>
+            </div>
+        </div>
+
+        <div class="client-card">
+            <h3 style="margin-top: 0;">Detalle de Movimientos</h3>
+            <table style="width: 100%; border-collapse: separate; border-spacing: 0 10px; font-size: 0.9rem;">
+                <tr style="text-align: left; color: #64748b; font-size: 0.8rem;">
+                    <th>Fecha</th>
+                    <th>Concepto</th>
+                    <th style="text-align: right;">Monto</th>
+                </tr>
+                <tr style="background: #f0fdf4; border-radius: 8px;">
+                    <td style="padding: 10px; border-radius: 8px 0 0 8px;">01/03</td>
+                    <td style="padding: 10px;">Abono a capital</td>
+                    <td style="padding: 10px; color: #166534; font-weight: 700; text-align: right;">+C$ 500</td>
+                </tr>
+                <tr style="background: #fef2f2; border-radius: 8px;">
+                    <td style="padding: 10px; border-radius: 8px 0 0 8px;">04/03</td>
+                    <td style="padding: 10px;">Multa por mora</td>
+                    <td style="padding: 10px; color: #991b1b; font-weight: 700; text-align: right;">-C$ 100</td>
+                </tr>
+            </table>
+        </div>
+
+        <button onclick="cerrarSesion()" class="btn-cerrar" style="width: 100%;">Cerrar Sesión</button>
+    </main>
+
+    
+
+    <script>
+        // Cargar datos del cliente
+        const cliente = JSON.parse(localStorage.getItem('clienteSeleccionado'));
+        if(cliente) {
+            document.getElementById('nombreCliente').innerText = cliente.nombre;
+        }
+
+        function cerrarSesion() {
+            if(confirm("¿Estás seguro de cerrar sesión?")) {
+                localStorage.removeItem('clienteSeleccionado');
+                window.location.href = "../index.html"; 
+            }
+        }
+    </script>
+</body>
+</html>

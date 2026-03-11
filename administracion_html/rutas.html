@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="stylesheet" href="../css/admin.css">
+    <title>Gestión de Rutas</title>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Financiera App</h2>
+        <ul>
+            <li><a href="admin.html">Dashboard</a></li>
+            <li><a href="clientes.html">Clientes</a></li>
+            <li style="color: #3498db; font-weight: bold;">Rutas</li>
+            <li><a href="reportes.html">Reportes</a></li>
+            <li><a href="trabajadores.html">Trabajadores</a></li>
+        </ul>
+    </div>
+    
+    <div class="logout-container">
+        <button class="btn-logout" onclick="cerrarSesion()">Cerrar Sesión</button>
+    </div>
+
+    <div class="main-content">
+        <h1>Asignación y Logística de Rutas</h1>
+        
+        <section class="table-container">
+            <h3>Detalle de Clientes por Zona</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Dirección Exacta</th>
+                        <th>Estado</th>
+                        <th>Cobrador Asignado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>C001</td>
+                        <td>Juan Pérez</td>
+                        <td>Calle Principal, #10, Col. Centro</td>
+                        <td><span class="status-ok">Al día</span></td>
+                        <td>
+                            <select class="select-cobrador">
+                                <option>Pedro R.</option>
+                                <option>Ana G.</option>
+                            </select>
+                        </td>
+                        <td><button class="btn-sm">Ver Mapa</button></td>
+                    </tr>
+                    <tr>
+                        <td>C002</td>
+                        <td>María López</td>
+                        <td>Av. Central, #20, Col. Norte</td>
+                        <td><span class="status-mora">En mora</span></td>
+                        <td>
+                            <select class="select-cobrador">
+                                <option>Pedro R.</option>
+                                <option selected>Ana G.</option>
+                            </select>
+                        </td>
+                        <td><button class="btn-sm">Ver Mapa</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <script>
+        function cerrarSesion() {
+            // Aquí, cuando conectes Firebase, añadirás: firebase.auth().signOut()
+            // Por ahora, solo redireccionamos:
+            window.location.href = "../index.html";
+        }
+    </script>
+</body>
+</html>

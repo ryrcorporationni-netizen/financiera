@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="stylesheet" href="../css/admin.css">
+    <title>Reportes Financieros</title>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Financiera App</h2>
+        <ul>
+            <li><a href="admin.html">Dashboard</a></li>
+            <li><a href="clientes.html">Clientes</a></li>
+            <li><a href="rutas.html">Rutas</a></li>
+            <li style="color: #3498db; font-weight: bold;">Reportes</li>
+            <li><a href="trabajadores.html">Trabajadores</a></li>
+        </ul>
+    </div>
+
+    <div class="logout-container">
+        <button class="btn-logout" onclick="cerrarSesion()">Cerrar Sesión</button>
+    </div>
+
+    <div class="main-content">
+        <h1>Reportes Financieros</h1>
+
+        <section class="stats">
+            <div class="card"><h3>Total Prestado</h3><p>$50,000</p></div>
+            <div class="card"><h3>Total Cobrado</h3><p>$32,400</p></div>
+            <div class="card"><h3>Cartera en Mora</h3><p>15%</p></div>
+        </section>
+
+        <section class="table-container">
+            <h3>Desglose por Cobrador</h3>
+            <table>
+                <tr><th>Cobrador</th><th>Meta</th><th>Cobrado</th><th>Efectividad</th></tr>
+                <tr><td>Pedro R.</td><td>$10,000</td><td>$9,500</td><td>95%</td></tr>
+                <tr><td>Ana G.</td><td>$10,000</td><td>$7,200</td><td>72%</td></tr>
+            </table>
+        </section>
+    </div>
+
+    <script>
+        function cerrarSesion() {
+            // Aquí, cuando conectes Firebase, añadirás: firebase.auth().signOut()
+            // Por ahora, solo redireccionamos:
+            window.location.href = "../index.html";
+        }
+    </script>
+</body>
+</html>

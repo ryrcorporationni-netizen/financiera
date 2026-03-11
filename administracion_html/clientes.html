@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="stylesheet" href="../css/admin.css"> <title>Gestión de Clientes</title>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Financiera App</h2>
+        <ul>
+            <li><a href="admin.html">Dashboard</a></li>
+            <li style="color: #3498db; font-weight: bold;">Clientes</li>
+            <li><a href="rutas.html">Rutas</a></li>
+            <li><a href="reportes.html">Reportes</a></li>
+            <li><a href="trabajadores.html">Trabajadores</a></li>
+        </ul>
+    </div>
+
+    <div class="logout-container">
+        <button class="btn-logout" onclick="cerrarSesion()">Cerrar Sesión</button>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Cartera de Clientes</h1>
+        </header>
+
+        <div class="toolbar">
+            <input type="text" placeholder="Buscar por nombre o ID...">
+            <button class="btn-primary" onclick="abrirModalNuevo()">+ Nuevo Cliente</button>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Teléfono</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>C001</td>
+                        <td>Juan Pérez</td>
+                        <td>8888-1234</td>
+                        <td><span class="status-ok">Al día</span></td>
+                        <td><button class="btn-sm" onclick="abrirModal()">Ver Perfil</button></td>
+                    </tr>
+                    <tr>
+                        <td>C002</td>
+                        <td>María López</td>
+                        <td>8888-5678</td>
+                        <td><span class="status-mora">En mora</span></td>
+                        <td><button class="btn-sm" onclick="abrirModal()">Ver Perfil</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="modalPerfil" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrarModal()">&times;</span>
+        <h2>Perfil de Cliente</h2>
+        <p><strong>Nombre:</strong> Juan Pérez</p>
+        <p><strong>Estado Actual:</strong> <span class="status-ok">Al día</span></p>
+        <hr>
+        <h3>Historial de Pagos</h3>
+        <table>
+            <tr><th>Fecha</th><th>Monto</th><th>Cobrador</th></tr>
+            <tr><td>09/03/26</td><td>$500</td><td>Pedro R.</td></tr>
+        </table>
+    </div>
+</div>
+
+<div id="modalNuevo" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrarModalNuevo()">&times;</span>
+        <h2>Registrar Nuevo Cliente</h2>
+        <form>
+            <input type="text" placeholder="Nombre completo" required style="width: 100%; padding: 8px; margin-bottom: 10px;">
+            <input type="text" placeholder="Teléfono" required style="width: 100%; padding: 8px; margin-bottom: 10px;">
+            <input type="text" placeholder="Dirección" required style="width: 100%; padding: 8px; margin-bottom: 20px;">
+            <button type="submit" class="btn-primary">Guardar Cliente</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Funciones Perfil
+    function abrirModal() { document.getElementById('modalPerfil').style.display = 'block'; }
+    function cerrarModal() { document.getElementById('modalPerfil').style.display = 'none'; }
+
+    // Funciones Nuevo Cliente
+    function abrirModalNuevo() { document.getElementById('modalNuevo').style.display = 'block'; }
+    function cerrarModalNuevo() { document.getElementById('modalNuevo').style.display = 'none'; }
+
+    function cerrarSesion() {
+            // Aquí, cuando conectes Firebase, añadirás: firebase.auth().signOut()
+            // Por ahora, solo redireccionamos:
+            window.location.href = "../index.html";
+    }
+</script>
+
+</body>
+</html>

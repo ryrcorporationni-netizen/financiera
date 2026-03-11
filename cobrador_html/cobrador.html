@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/cobrador.css">
+    <title>Sistema de Cobros Nicaragua</title>
+</head>
+<body>
+
+   <header class="app-header">
+        <div class="header-main" style="display: flex; justify-content: space-between; align-items: center; padding: 0 16px;">
+            <div>
+                <h1>Mi Ruta</h1>
+                <p>11 de marzo, 2026</p>
+            </div>
+            <nav class="navbar">
+                <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="cobrador.html">🏠 Ruta Hoy</a></li>
+                    <li><a href="cartera.html">📂 Cartera</a></li>
+                    <li><a href="solicitud.html">📍 Solicitudes</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+        <div class="search-container">
+            <input type="text" id="busqueda" placeholder="Buscar..." onkeyup="filtrarClientes()">
+        </div>
+    </header>
+
+    <main class="lista-container">
+
+        <div id="listaClientes">
+            <div class="client-card" data-nombre="Juan Pérez">
+                <div class="card-info">
+                    <h3>Juan Pérez</h3>
+                    <p class="address">📍 Calle 1, #10 - León</p>
+                    <div class="debt-preview">
+                        <span>Mora: <strong>C$ 500</strong></span>
+                    </div>
+                </div>
+                <button class="btn-action" onclick="irADetalle('Juan Pérez', '500', 'Calle 1, #10')">Cobrar</button>
+                <button class="btn-action" onclick="reportarNovedad('Juan Pérez')">⚠️ Reportar Novedad</button>
+            </div>
+        </div>
+    </main>
+
+    <div id="modalNovedad" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="cerrarNovedad()">&times;</span>
+            <h2>Reportar Novedad</h2>
+            <p id="clienteNovedad" style="font-weight: bold; margin-bottom: 15px;"></p>
+            
+            <div class="modal-actions">
+                <button class="btn-action" onclick="enviarNovedad('No se encuentra')">❌ No se encuentra</button>
+                <button class="btn-action" onclick="enviarNovedad('No tiene dinero')">💰 No tiene dinero</button>
+                <button class="btn-action" style="background: #64748b;" onclick="cerrarNovedad()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Función del Menú
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        // Búsqueda
+        function filtrarClientes() {
+            let input = document.getElementById('busqueda').value.toLowerCase();
+            let tarjetas = document.getElementsByClassName('client-card');
+            for (let i = 0; i < tarjetas.length; i++) {
+                let nombre = tarjetas[i].getAttribute('data-nombre').toLowerCase();
+                tarjetas[i].style.display = nombre.includes(input) ? "" : "none";
+            }
+        }
+
+        // Navegación
+        function cerrarSesion() { if(confirm("¿Cerrar sesión?")) window.location.href = "../login.html"; }
+        function irADetalle(nombre, mora, direccion) {
+            localStorage.setItem('clienteSeleccionado', JSON.stringify({ nombre, mora, direccion }));
+            window.location.href = "detalle_pago.html";
+        }
+
+        function reportarNovedad(nombre) {
+            const motivo = prompt("Reporte para " + nombre + ":\n1. No se encuentra\n2. No tiene dinero");
+            if (motivo) alert("Reporte registrado: " + motivo);
+        }
+
+        // Variable global para saber a qué cliente reportamos
+        let clienteActual = "";
+
+        function reportarNovedad(nombre) {
+            clienteActual = nombre;
+            document.getElementById('clienteNovedad').innerText = "Cliente: " + nombre;
+            document.getElementById('modalNovedad').classList.add('activo');
+        }
+
+        function cerrarNovedad() {
+            document.getElementById('modalNovedad').classList.remove('activo');
+        }
+
+        function enviarNovedad(motivo) {
+            // AQUÍ IRÍA TU LÓGICA DE FIREBASE PARA GUARDAR EL REPORTE
+            alert("Reporte enviado para " + clienteActual + ": " + motivo);
+            
+            // Cerramos el modal tras la acción
+            cerrarNovedad();
+        }
+    </script>
+</body>
+</html>

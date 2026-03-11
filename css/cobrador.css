@@ -1,0 +1,290 @@
+/* --- BASE Y TIPOGRAFÍA --- */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    margin: 0;
+    background: #f1f5f9; /* Un gris azulado más moderno */
+    color: #1e293b;
+    line-height: 1.5;
+}
+
+/* --- HEADER --- */
+.app-header {
+    background: #1e293b;
+    padding: 20px 16px;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.network-status {
+    font-size: 0.8rem;
+    color: #4ade80; /* Verde neón para "En línea" */
+    font-weight: 600;
+}
+
+.header-main h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.header-main p {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+.btn-exit {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+}
+
+/* --- BUSCADOR --- */
+.search-container {
+    margin-top: 15px;
+}
+
+#busqueda {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: none;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    box-sizing: border-box; /* Crucial para que no se salga */
+}
+
+#busqueda::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* --- CONTENEDOR PRINCIPAL --- */
+.lista-container {
+    padding: 16px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.action-bar {
+    margin-bottom: 20px;
+}
+
+.btn-new-loan {
+    width: 100%;
+    background: #059669;
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1rem;
+    box-shadow: 0 4px 6px rgba(5, 150, 105, 0.2);
+    cursor: pointer;
+}
+
+/* --- TARJETAS DE CLIENTE --- */
+.client-card {
+    background: white;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+}
+
+.top-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.status-badge {
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+}
+
+.loan-type {
+    font-size: 0.7rem;
+    background: #f1f5f9;
+    padding: 4px 10px;
+    border-radius: 6px;
+    color: #64748b;
+}
+
+.client-card h3 {
+    margin: 5px 0;
+    font-size: 1.2rem;
+}
+
+.address {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin: 0 0 12px 0;
+}
+
+.debt-preview {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    padding-top: 12px;
+    border-top: 1px solid #f1f5f9;
+}
+
+.last-pay {
+    color: #e11d48; /* Rojo Nicaragua para atrasos */
+    font-weight: 600;
+}
+
+/* --- BOTÓN DE ACCIÓN (COBRAR) --- */
+.btn-action {
+    display: block;
+    width: 100%;
+    background: #2563eb; /* Azul corporativo */
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    padding: 14px;
+    border-radius: 12px;
+    font-weight: 700;
+    margin-top: 12px;
+    box-sizing: border-box;
+}
+
+.btn-action:hover {
+    background: #1d4ed8;
+}
+
+/* Estilos del Menú */
+
+/* --- ESTILO BASE DEL MENÚ (Aplica para ambos) --- */
+.nav-links {
+    list-style: none;
+    background: #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.4s ease-out; /* Transición fluida */
+    position: absolute;
+    top: 70px;
+    z-index: 1000;
+}
+
+.menu-toggle {
+    cursor: pointer;
+    font-size: 24px;
+    padding: 10px;
+}
+
+/* --- ESTILO PARA MÓVIL (Pantallas pequeñas) --- */
+@media (max-width: 768px) {
+    .nav-links {
+        right: 16px; /* Pegado a la derecha */
+        width: 200px;
+        max-height: 0; /* Cerrado por defecto */
+    }
+    .nav-links.active {
+        max-height: 300px; /* Abierto */
+    }
+}
+
+/* --- ESTILO PARA ESCRITORIO (Pantallas grandes) --- */
+@media (min-width: 769px) {
+    .menu-toggle { display: none; }
+    
+    .nav-links {
+        display: flex !important; /* Fuerza visibilidad en PC */
+        position: static;
+        max-height: none !important;
+        background: transparent;
+        gap: 20px;
+        align-items: center;
+    }
+    
+    /* Restauramos el color blanco para escritorio */
+    .nav-links li a {
+        color: white !important; 
+        font-weight: 500;
+        text-decoration: none;
+    }
+    
+    /* Un ligero efecto hover para escritorio */
+    .nav-links li a:hover {
+        color: #38bdf8 !important;
+    }
+}
+
+/* Esto aplica para ambos, móvil y escritorio */
+.nav-links li a {
+    color: white; 
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+}
+
+/* Contenedor del Modal */
+.modal {
+    display: none;        /* SOLO ESTO. Elimina el display: flex de aquí. */
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 2000;
+    
+    /* QUITAMOS EL FLEX AQUÍ PARA QUE NO SE VEAN AL INICIAR */
+}
+
+/* Contenido del Modal */
+.modal-content {
+    background: white;
+    width: 90%;           /* Ocupa el 90% de la pantalla en móviles */
+    max-width: 400px;     /* No crece más de 400px en escritorio */
+    padding: 24px;
+    border-radius: 20px;
+    position: relative;
+    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);
+    
+    /* Asegura que el contenido sea vertical */
+    display: flex;
+    flex-direction: column;
+}
+
+.modal.activo {
+    display: flex;        /* Esta clase usaremos en JS para centrar */
+    justify-content: center;
+    align-items: center;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #64748b;
+}
+
+.close:hover {
+    color: #1e293b;
+}
