@@ -14,7 +14,7 @@
                 <p>Ingresa para gestionar tu cartera</p>
             </div>
             
-            <form id="loginForm">
+            <form id="loginForm" action="#" onsubmit="return false;">
                 <div class="user-box">
                     <input type="text" id="email" required placeholder="Correo electrónico">
                 </div>
@@ -34,26 +34,34 @@
     <script>
     // Seleccionamos el formulario para prevenir el envío por defecto
     document.getElementById('loginForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Evita que la página se recargue
-        
-        const email = document.getElementById('email').value.toUpperCase(); // Convertimos a mayúsculas
-        const primerCaracter = email.charAt(0);
-        
-        // Lógica de redirección basada en el rol
-        switch(primerCaracter) {
-            case 'A':
-                window.location.href = "../administracion_html/admin.html";
-                break;
-            case 'R':
-                window.location.href = "../cobrador_html/cobrador.html";
-                break;
-            case 'C':
-                window.location.href = "../cliente_html/estado_cuenta.html";
-                break;
-            default:
-                alert("Correo no válido o rol no reconocido.");
-        }
-    });
+    // Esto es lo más importante: detiene cualquier acción nativa del formulario
+    event.preventDefault(); 
+    event.stopPropagation();
+    
+    const emailInput = document.getElementById('email').value.trim();
+    if (!emailInput) {
+        alert("Por favor ingresa un usuario");
+        return false;
+    }
+
+    const primerCaracter = emailInput.toUpperCase().charAt(0);
+    
+    // Rutas relativas corregidas según tu estructura de carpetas
+    switch(primerCaracter) {
+        case 'A':
+            window.location.href = "administracion_html/admin.html";
+            break;
+        case 'R':
+            window.location.href = "cobrador_html/cobrador.html";
+            break;
+        case 'C':
+            window.location.href = "cliente_html/estado_cuenta.html";
+            break;
+        default:
+            alert("Usuario o rol no reconocido.");
+    }
+    return false; // Asegura que no se procese nada más
+});
     </script>
     <script>
         function recuperarPassword() {
@@ -68,5 +76,6 @@
 </body>
 
 </html>
+
 
 
