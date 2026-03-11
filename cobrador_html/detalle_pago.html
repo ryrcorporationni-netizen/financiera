@@ -184,6 +184,17 @@
                 location.reload(); // Recarga para ver el cambio
             }
         }
+
+        function cerrarSesion() {
+            if(confirm("¿Estás seguro de que deseas cerrar sesión?")) {
+                // Limpiamos los datos del localStorage (si guardas el usuario o sesión)
+                localStorage.clear(); 
+                
+                // Redirigimos al login principal
+                // Ajusta la ruta dependiendo de dónde esté tu index.html
+                window.location.href = "../index.html"; 
+            }
+        }
     </script>
 
 </body>

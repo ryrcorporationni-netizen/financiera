@@ -32,6 +32,17 @@
     </div>
 
     <script>
+        function recuperarPassword() {
+            const email = document.getElementById('email').value;
+            if (email === "") {
+                alert("Por favor, ingresa tu correo electrónico primero para recuperar la contraseña.");
+            } else {
+                alert("Se ha enviado un enlace de recuperación a: " + email);
+            }
+        }
+    </script>
+
+    <script>
     // Seleccionamos el formulario para prevenir el envío por defecto
     document.getElementById('loginForm').addEventListener('submit', function(event) {
     // Esto es lo más importante: detiene cualquier acción nativa del formulario
@@ -62,20 +73,15 @@
     }
     return false; // Asegura que no se procese nada más
 });
-    </script>
-    <script>
-        function recuperarPassword() {
-            const email = document.getElementById('email').value;
-            if (email === "") {
-                alert("Por favor, ingresa tu correo electrónico primero para recuperar la contraseña.");
-            } else {
-                alert("Se ha enviado un enlace de recuperación a: " + email);
-            }
+
+    function recuperarPassword() {
+        const email = document.getElementById('email').value;
+        if (email === "") {
+            alert("Por favor, ingresa tu correo electrónico.");
+        } else {
+            alert("Se ha enviado un enlace de recuperación a: " + email);
         }
-    </script>
+    }
+</script>
 </body>
-
 </html>
-
-
-

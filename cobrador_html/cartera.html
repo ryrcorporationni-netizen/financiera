@@ -21,6 +21,11 @@
                     <li><a href="cobrador.html">🏠 Ruta Hoy</a></li>
                     <li><a href="cartera.html" style="color: #38bdf8;">📂 Cartera</a></li>
                     <li><a href="solicitud.html">📍 Solicitudes</a></li>
+                    <li class="nav-logout">
+                        <a href="#" onclick="cerrarSesion()" style="color: #ef4444; border-top: 1px solid #e2e8f0; margin-top: 10px; padding-top: 10px;">
+                            🚪 Cerrar Sesión
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -167,6 +172,17 @@
             for (let i = 0; i < tarjetas.length; i++) {
                 let nombre = tarjetas[i].querySelector('h3').innerText.toLowerCase();
                 tarjetas[i].style.display = nombre.includes(input) ? "" : "none";
+            }
+        }
+
+        function cerrarSesion() {
+            if(confirm("¿Estás seguro de que deseas cerrar sesión?")) {
+                // Limpiamos los datos del localStorage (si guardas el usuario o sesión)
+                localStorage.clear(); 
+                
+                // Redirigimos al login principal
+                // Ajusta la ruta dependiendo de dónde esté tu index.html
+                window.location.href = "../index.html"; 
             }
         }
     </script>
